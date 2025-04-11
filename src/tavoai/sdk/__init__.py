@@ -1,4 +1,4 @@
-"""TavoAI SDK package for regulatory policy evaluation."""
+"""TavoAI SDK package for AI risk controls evaluation."""
 
 from tavoai.sdk.client import TavoAIClient
 from tavoai.sdk.models import PolicyResult, ContentType
