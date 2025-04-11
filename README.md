@@ -21,6 +21,12 @@ TavoAI's risk control as code (RCAC) guardrails help ensure AI systems comply wi
 - **Decorator Support**: Simple decorator API to automatically validate function inputs and outputs
 - **Custom Configuration**: Flexible metadata and configuration options
 
+## Installation
+
+```bash
+pip install tavoai-sdk
+```
+
 ## 2. Get Started with Local Dev Environment
 
 ### 2.1 Install tavo-cli Tool to Spin Up a Local Server
