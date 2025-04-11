@@ -40,10 +40,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/tavoai/tavoai-rpac-sdk"
-Documentation = "https://github.com/tavoai/tavoai-rpac-sdk#readme"
-"Bug Tracker" = "https://github.com/tavoai/tavoai-rpac-sdk/issues"
-Source = "https://github.com/tavoai/tavoai-rpac-sdk"
+Homepage = "https://github.com/TavoAI/tavo-python-sdk"
+Documentation = "https://github.com/TavoAI/tavo-python-sdk#readme"
+"Bug Tracker" = "https://github.com/TavoAI/tavo-python-sdk/issues"
+Source = "https://github.com/TavoAI/tavo-python-sdk"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

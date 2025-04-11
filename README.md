@@ -1,16 +1,18 @@
 # TavoAI SDK
 
-A Python SDK for integrating with TavoAI's regulatory policy as code (RPAC) guardrails.
+A Python SDK for integrating with TavoAI's risk control as code (RCAC) guardrails.
 
 [![PyPI version](https://img.shields.io/pypi/v/tavoai-sdk.svg)](https://pypi.org/project/tavoai-sdk/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/tavoai-sdk.svg)](https://pypi.org/project/tavoai-sdk/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Introduction
+## 1. Introduction
 
-The TavoAI SDK provides a simple, intuitive interface for evaluating content against regulatory guardrails defined in the TavoAI RPAC repository. This SDK allows you to validate both input queries and output responses to ensure compliance with industry-specific regulations and best practices.
+The TavoAI SDK provides a simple, intuitive interface for evaluating content against regulatory guardrails defined in the TavoAI RCAC repository. This SDK allows you to validate both input queries and output responses to ensure compliance with industry-specific regulations and best practices.
 
-## Features
+TavoAI's risk control as code (RCAC) guardrails help ensure AI systems comply with industry-specific regulations across financial services, healthcare, insurance, and more. The SDK supports both synchronous validation of content through a client API and automatic validation through function decorators.
+
+### Features
 
 - **Easy Integration**: Simple API to validate content against regulatory policies
 - **Multiple Domains**: Support for financial, healthcare, insurance and more
@@ -19,24 +21,56 @@ The TavoAI SDK provides a simple, intuitive interface for evaluating content aga
 - **Decorator Support**: Simple decorator API to automatically validate function inputs and outputs
 - **Custom Configuration**: Flexible metadata and configuration options
 
-## Installation
+## 2. Get Started with Local Dev Environment
 
-```bash
-pip install tavoai-sdk
+### 2.1 Install tavo-cli Tool to Spin Up a Local Server
+
+To use the TavoAI SDK, you'll need a running policy server. The easiest way to get started is with the tavo-cli tool.
+
+```
+For installation instructions, please visit the official tavo-cli GitHub repository:
+
+https://github.com/TavoAI/tavo-cli#tavo-cli
 ```
 
-## Quick Start
+The repository provides platform-specific installation instructions for macOS and Linux.
+
+### 2.2 Local Dev Server Usage
+
+```
+See instructions for the local dev server here:
+
+https://github.com/TavoAI/tavo-cli#usage
+```
+
+## 3. Quick Start
+
+### 3.1 Client API
 
 ```python
-from tavoai.sdk import TavoAIClient, GuardrailType
+from tavoai.sdk import TavoAIClient
 
 # Initialize the client with the policy server URL
 client = TavoAIClient(api_base_url="http://localhost:5000")
 
+# Example metadata and configuration
+metadata = {
+    "jurisdiction": "US",
+    "industry": "financial",
+    "use_case": "investment_advice"
+}
+
+config = {
+    "pii_detection_enabled": True,
+    "misinformation_detection_enabled": True
+}
+
 # Evaluate an input query
 input_result = client.evaluate_input(
     content="What stocks should I invest in for my retirement?",
-    guardrail_type=GuardrailType.FINANCIAL_ADVICE
+    policy_name="financial_advice_input",
+    metadata=metadata,
+    config=config
 )
 
 # Check if the input is allowed
@@ -46,50 +80,34 @@ else:
     print("Input content is not allowed!")
     for reason in input_result.rejection_reasons:
         print(f"{reason.get('category')}: {reason.get('reason')}")
+
+# Evaluate an output response
+output_result = client.evaluate_output(
+    content="While I cannot provide specific investment advice...",
+    policy_name="financial_advice_output",
+    metadata=metadata,
+    config=config
+)
 ```
 
-## Documentation
+### 3.2 Decorator API
 
-- [Getting Started](docs/getting_started.md)
-- [API Reference](docs/api_reference.md)
-- [Examples](examples/)
-
-## Available Guardrails
-
-The SDK provides the following predefined guardrail types:
-
-### Financial Services
-
-- `FINANCIAL_ADVICE`: Guardrails for financial advice content
-- `FINANCIAL_DATA_PROTECTION`: Protection of financial data and PII
-- `INVESTMENT_RECOMMENDATIONS`: Investment-specific advice
-- `RETIREMENT_ADVICE`: Retirement planning and superannuation advice
-
-### Healthcare
-
-- `MEDICAL_INFORMATION`: General medical information guardrails
-- `PATIENT_DATA_PROTECTION`: Protection of patient data and PHI
-- `MENTAL_HEALTH_SUPPORT`: Mental health-related guidance
-- `MEDICATION_INFORMATION`: Information about medications
-
-### Insurance
-
-- `INSURANCE_CLAIMS_ADVICE`: Guidance on insurance claims
-- `INSURANCE_POLICY_GUIDANCE`: Information about insurance policies
-- `INSURANCE_RISK_ASSESSMENT`: Assessment of insurance risks
-
-## Decorator API
+The decorator API provides a more convenient way to automatically validate function inputs and outputs:
 
 ```python
-from tavoai.sdk import TavoAIClient, GuardrailType, TavoAIGuardrail
+from tavoai.sdk import TavoAIClient, TavoAIGuardrail
 
+# Initialize client
 client = TavoAIClient(api_base_url="http://localhost:5000")
 
-@TavoAIGuardrail(
+# Create a guardrail decorator with shared configuration
+guardrail = TavoAIGuardrail(
     client=client,
-    input_guardrail=GuardrailType.FINANCIAL_ADVICE,
-    output_guardrail=GuardrailType.FINANCIAL_ADVICE
+    metadata={"jurisdiction": "US", "industry": "financial"}
 )
+
+# Apply decorator with specific policy names
+@guardrail("financial_advice_input", "financial_advice_output")
 def get_financial_advice(query: str) -> str:
     # This function would typically call an LLM API
     return "Thank you for your question about financial planning..."
@@ -98,19 +116,33 @@ def get_financial_advice(query: str) -> str:
 response = get_financial_advice("How should I invest for retirement?")
 ```
 
-## Development
+## 4. Examples
 
-```bash
-# Clone the repository
-git clone https://github.com/tavoai/tavo-python-sdk.git
-cd tavo-python-sdk
+The SDK includes several example scripts demonstrating different usage patterns:
 
-# Install in development mode
-pip install -e .[dev]
+- **Basic Usage**: Simple examples of using the client and decorator APIs
+- **Client Example**: Detailed examples of using the client API for input and output validation
+- **Decorator Example**: Detailed examples of using the decorator API for automatic validation
 
-# Run tests
-pytest
-```
+See the [examples directory](examples/) for full working examples.
+
+### Available Guardrails
+
+The SDK provides predefined guardrail types for various domains:
+
+#### Financial Services
+- `financial_advice_input/output`: Guardrails for financial advice content
+- `financial_data_protection_input/output`: Protection of financial data and PII
+- `investment_recommendations_input/output`: Investment-specific advice
+
+#### Healthcare
+- `medical_information_input/output`: General medical information guardrails
+- `patient_data_protection_input/output`: Protection of patient data and PHI
+- `mental_health_support_input/output`: Mental health-related guidance
+
+#### Insurance
+- `insurance_claims_advice_input/output`: Guidance on insurance claims
+- `insurance_policy_guidance_input/output`: Information about insurance policies
 
 ## License
 
