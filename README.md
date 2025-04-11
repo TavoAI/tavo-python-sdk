@@ -27,9 +27,9 @@ TavoAI's risk control as code (RCAC) guardrails help ensure AI systems comply wi
 
 To use the TavoAI SDK, you'll need a running policy server. The easiest way to get started is with the tavo-cli tool.
 
-```
 For installation instructions, please visit the official tavo-cli GitHub repository:
 
+```
 https://github.com/TavoAI/tavo-cli#tavo-cli
 ```
 
@@ -37,9 +37,9 @@ The repository provides platform-specific installation instructions for macOS an
 
 ### 2.2 Local Dev Server Usage
 
-```
 See instructions for the local dev server here:
 
+```
 https://github.com/TavoAI/tavo-cli#usage
 ```
 
