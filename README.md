@@ -132,23 +132,10 @@ The SDK includes several example scripts demonstrating different usage patterns:
 
 See the [examples directory](examples/) for full working examples.
 
-### Available Guardrails
+### Controls Examples
 
-The SDK provides predefined guardrail types for various domains:
+See the [cli repo](https://github.com/TavoAI/tavo-cli/tree/master/opa/controls_examples) for some pre-populated controls in Rego code.
 
-#### Financial Services
-- `financial_advice_input/output`: Guardrails for financial advice content
-- `financial_data_protection_input/output`: Protection of financial data and PII
-- `investment_recommendations_input/output`: Investment-specific advice
-
-#### Healthcare
-- `medical_information_input/output`: General medical information guardrails
-- `patient_data_protection_input/output`: Protection of patient data and PHI
-- `mental_health_support_input/output`: Mental health-related guidance
-
-#### Insurance
-- `insurance_claims_advice_input/output`: Guidance on insurance claims
-- `insurance_policy_guidance_input/output`: Information about insurance policies
 
 ## License
 
