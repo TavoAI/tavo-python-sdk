@@ -8,14 +8,13 @@ A Python SDK for integrating with TavoAI's risk control as code (RCAC) guardrail
 
 ## 1. Introduction
 
-The TavoAI SDK provides a simple, intuitive interface for evaluating content against regulatory guardrails defined in the TavoAI RCAC repository. This SDK allows you to validate both input queries and output responses to ensure compliance with industry-specific regulations and best practices.
+The TavoAI SDK provides a simple, intuitive interface for evaluating content against regulatory guardrails defined in the TavoAI RCAC repository. This SDK allows you to validate both input queries and output responses to ensure AI risk controls are in place.
 
-TavoAI's risk control as code (RCAC) guardrails help ensure AI systems comply with industry-specific regulations across financial services, healthcare, insurance, and more. The SDK supports both synchronous validation of content through a client API and automatic validation through function decorators.
+TavoAI's risk control as code (RCAC) guardrails help ensure AI systems comply with controls from industry-specific regulations across financial services, healthcare, insurance, and more. The SDK supports both synchronous validation of content through a client API and automatic validation through function decorators.
 
 ### Features
 
-- **Easy Integration**: Simple API to validate content against regulatory policies
-- **Multiple Domains**: Support for financial, healthcare, insurance and more
+- **Easy Integration**: Simple API to validate content against risk controls
 - **Input & Output Validation**: Validate both user queries and AI responses
 - **Multiple Use Modes**: Support for both local OPA CLI evaluation and remote policy server
 - **Decorator Support**: Simple decorator API to automatically validate function inputs and outputs
